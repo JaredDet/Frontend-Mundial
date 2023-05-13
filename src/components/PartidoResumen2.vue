@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import EquipoLocal from './EquipoLocal.vue'
+import EquipoLocal from './EquipoInfo.vue'
 import EquipoVisita from './EquipoVisita.vue'
 
 export default {
@@ -67,6 +67,8 @@ export default {
   margin-bottom: -5.5%;
   color: #3e3e42;
 }
+
+
 
 .v-container {
   font-family: "Bebas Neue", sans-serif;

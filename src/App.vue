@@ -1,32 +1,14 @@
 <template>
-  <v-app>
-    <v-main>
-      <AlineacionesInfo />
-    </v-main>
-  </v-app>
+  <router-view />
 </template>
 
-<script>
-import AlineacionesInfo from "./components/AlineacionesInfo.vue";
-
-export default {
-  name: "App",
-
-  components: {
-    AlineacionesInfo,
-  },
-
-  data: () => ({
-    //
-  }),
-};
-</script>
-
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0 auto;
+#app {
+  margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  background-color: #1c1c1c;
+  color: #d2d2d2;
+  font-family: "Bebas Neue", sans-serif;
 }
-
 </style>

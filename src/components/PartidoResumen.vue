@@ -1,43 +1,38 @@
 <template>
-  <v-container class="d-flex align-center modo-oscuro">
-    <v-card class="mx-auto redondeado" width="500">
-      <estadio-info :estadio="estadio.nombre" :fecha="torneo.fecha">
-      </estadio-info>
+  <v-container class="d-flex align-center justify-center principal">
+    <v-card class="redondeado carta">
+      <v-row class="fila-principal">
+        <EquipoInfo
+          :nombre="equipoLocal.nombre"
+          :codigo="equipoLocal.codigo"
+          :goles="equipoLocal.goles"
+        >
+        </EquipoInfo>
 
-      <v-container class="contenedor">
-        <v-row>
-          <equipo-local
-            :nombre="equipoLocal.nombre"
-            :codigo="equipoLocal.codigo"
-            :goles="equipoLocal.goles"
-            :fase="fase.nombre"
-          >
-          </equipo-local>
+        <SeparadorFase :fase="fase.nombre" :fecha="torneo.fecha"></SeparadorFase>
 
-          <equipo-visita
-            :nombre="equipoVisita.nombre"
-            :codigo="equipoVisita.codigo"
-            :goles="equipoVisita.goles"
-          >
-          </equipo-visita>
-        </v-row>
-      </v-container>
+        <EquipoInfo
+          :nombre="equipoVisita.nombre"
+          :codigo="equipoVisita.codigo"
+          :goles="equipoVisita.goles"
+          class="espejo"
+        >
+        </EquipoInfo>
+      </v-row>
     </v-card>
   </v-container>
 </template>
 
 <script>
 import "/node_modules/flag-icons/css/flag-icons.min.css";
-import EstadioInfo from "./EstadioInfo.vue";
-import EquipoLocal from "./EquipoLocal.vue";
-import EquipoVisita from "./EquipoVisita.vue";
+import EquipoInfo from "./EquipoInfo.vue";
 import axios from "axios";
+import SeparadorFase from "./SeparadorFase.vue";
 
 export default {
   components: {
-    EstadioInfo,
-    EquipoLocal,
-    EquipoVisita,
+    EquipoInfo,
+    SeparadorFase,
   },
 
   data() {
@@ -61,7 +56,7 @@ export default {
   },
   methods: {
     actualizarPartido(response) {
-      console.log(response)
+      console.log(response);
       const { fecha, marcador, fase, estadio } = response.data[0];
       this.torneo.fecha = fecha;
       this.estadio.nombre = estadio;
@@ -74,8 +69,9 @@ export default {
       this.fase.nombre = fase;
     },
     obtenerDatosPartido() {
+      const id = this.$route.params.id;
       axios
-        .get("http://localhost:8080/api/ronda/4")
+        .get(`http://localhost:8080/api/ronda/${id}`)
         .then((response) => {
           this.actualizarPartido(response);
         })
@@ -91,26 +87,39 @@ export default {
 </script>
 
 <style>
-.modo-oscuro {
+.principal {
   height: 100vh;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0;
-  background-color: #1c1c1c;
-  color: #ffffff;
 }
 
 .redondeado {
   border-radius: 17px;
 }
 
+.carta {
+  width: 35vw;
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.fila-principal {
+  width: 80%;
+}
+
 .v-container {
   font-family: "Bebas Neue", sans-serif;
 }
 
-@media (min-width: 1280px) {
-  .v-container {
-    max-width: 1550px;
-  }
+.espejo,
+.espejo .goleador,
+.espejo .nombre-container,
+.espejo .gol-container {
+  transform: scaleX(-1);
+}
+
+.espejo .jugador-container {
+  text-align: right;
 }
 </style>
