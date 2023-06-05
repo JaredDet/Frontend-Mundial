@@ -1,12 +1,7 @@
 <template>
-  <i
-    class="flecha"
-    :class="{
-      'flecha-espejo': this.espejo,
-      'flecha-verde': this.verde,
-      'flecha-roja': this.roja,
-    }"
-  ></i>
+  <img v-if="roja" :src="require('@/assets/flecha-roja.svg')" />
+  <img v-else-if="verde" :src="require('@/assets/flecha-verde.svg')" />
+  <img v-else-if="cambio" :src="require('@/assets/flecha-verde-roja.svg')" />
 </template>
 
 <script>
@@ -15,41 +10,20 @@ export default {
   props: {
     verde: {
       type: Boolean,
-      default: true,
+      required: false,
+      default: false,
     },
     roja: {
       type: Boolean,
+      required: false,
+
       default: false,
     },
-    espejo: {
+    cambio: {
       type: Boolean,
+      required: false,
       default: false,
     },
   },
 };
 </script>
-
-<style>
-.flecha {
-  display: inline-block;
-  position: relative;
-  width: 18px;
-  height: 18px;
-  left: 0px;
-  background-size: contain;
-}
-
-.flecha-verde {
-  background-image: url(../assets/flecha-verde.svg);
-  bottom: -3.5px;
-}
-
-.flecha-roja {
-  background-image: url(../assets/flecha-roja.svg);
-  bottom: -4px;
-}
-
-.flecha-espejo {
-  left: -2px;
-}
-</style>

@@ -2,34 +2,35 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
-    path: "/partido/:id/alineaciones",
+    path: "/partidos/:id/alineaciones",
     name: "alineaciones",
-    component: () => import("../components/AlineacionesInfo.vue"),
+    component: () => import("@/views/VistaAlineaciones.vue"),
   },
   {
-    path: "/ronda/:id",
-    name: "ronda",
-    component: () => import("../components/PartidoResumen.vue"),
+    path: "/partidos/:id",
+    name: "partidos",
+    component: () => import("@/views/VistaPartidosPrincipal.vue"),
+  },
+
+  {
+    path: "/cronologia",
+    name: "cronologia",
+    component: () => import("@/components/cronologia/InfoCronologia.vue"),
   },
   {
-    path: "/partido/:id/estadisticas",
-    name: "estadisticas",
-    component: () => import("../components/EstadisticasInfo.vue"),
+    path: "/miniatura",
+    name: "miniatura",
+    component: () => import("@/components/miniaturas/FaseMiniatura.vue"),
   },
   {
-    path: "/partido/:id/tecnicos",
-    name: "tecnicos",
-    component: () => import("../components/TecnicosInfo.vue"),
+    path: "/grupos",
+    name: "grupos",
+    component: () => import("@/views/VistaTablas.vue"),
   },
   {
-    path: "/partido/:id/suplentes",
-    name: "suplentes",
-    component: () => import("../components/SuplentesInfo.vue"),
-  },
-  {
-    path: "/grupo/:id",
-    name: "grupo",
-    component: () => import("../components/TablaInfo.vue"),
+    path: "/barra",
+    name: "barra",
+    component: () => import("@/components/tablas/TablaBarra.vue"),
   },
 ];
 

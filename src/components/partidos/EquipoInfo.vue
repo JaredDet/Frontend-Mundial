@@ -42,7 +42,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .bandera-container {
   display: flex;
   flex-direction: column;

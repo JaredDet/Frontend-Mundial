@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="d-flex align-center">
-    <v-row class="mx-auto justify-center align-center">
+    <v-row>
       <CampoFutbol :local="local" :visita="visita" />
     </v-row>
   </v-container>
@@ -9,6 +9,7 @@
 <script>
 import axios from "axios";
 import CampoFutbol from "./CampoFutbol.vue";
+
 
 export default {
   components: {
@@ -40,8 +41,8 @@ export default {
       this.cargarLaterales(equipoOrigen, equipoDestino);
     },
     cargarJugadores(titulares, equipoDestino) {
-      const { nombre, dorsal } = titulares.portero[0];
-      equipoDestino.portero = { nombre, dorsal };
+      
+      equipoDestino.portero = titulares.portero[0];
 
       const posiciones = [
         "defensas",
@@ -104,14 +105,6 @@ export default {
 };
 </script>
 
-<style>
 
-.equipo-local .jugador {
-  background-color: #1c1c1c;
-}
 
-.equipo-visita .jugador {
-  background-color: #237cd5;
-}
-</style>
 

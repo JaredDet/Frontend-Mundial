@@ -1,21 +1,5 @@
 <template>
-  <div v-if="jugadorTarjeta('tarjetaAmarilla')" class="tarjeta-container">
-    <i
-      class="tarjeta amarilla"
-      :class="{ 'espejo tarjeta-amarilla-espejo': this.espejo }"
-    ></i>
-    <i
-      v-if="jugadorTarjeta('tarjetaRoja')"
-      class="tarjeta roja tarjeta-segunda"
-      :class="{ 'espejo tarjeta-roja-espejo': this.espejo }"
-    ></i>
-  </div>
-  <div v-else if="jugadorTarjeta('tarjetaRoja')" class="tarjeta-container">
-    <i
-      class="tarjeta roja"
-      :class="{ 'espejo tarjeta-roja-espejo': this.espejo }"
-    ></i>
-  </div>
+  <img :src="obtenerRutaImagen()" />
 </template>
 
 <script>
@@ -31,65 +15,58 @@ export default {
       type: Boolean,
       default: false,
     },
+    recta: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    rutasImagenes() {
+      return {
+        roja: {
+          normal: require("@/assets/tarjeta-roja.svg"),
+          espejo: require("@/assets/tarjeta-roja-espejo.svg"),
+          recta: require("@/assets/tarjeta-roja-recta.svg"),
+        },
+        amarilla: {
+          normal: require("@/assets/tarjeta-amarilla.svg"),
+          espejo: require("@/assets/tarjeta-amarilla-espejo.svg"),
+          recta: require("@/assets/tarjeta-amarilla-recta.svg"),
+        },
+        doble: {
+          normal: require("@/assets/tarjeta-doble.svg"),
+          espejo: require("@/assets/tarjeta-doble-espejo.svg"),
+        },
+      };
+    },
   },
   methods: {
     jugadorTarjeta(tipoTarjeta) {
-      console.log(tipoTarjeta);
-      console.log(tipoTarjeta in this.jugador);
       return tipoTarjeta in this.jugador;
+    },
+    obtenerRutaImagen() {
+      const esRoja = this.jugadorTarjeta("tarjetaRoja");
+      const esAmarilla = this.jugadorTarjeta("tarjetaAmarilla");
+      const { amarilla, roja, doble } = this.rutasImagenes;
+
+      if (esRoja && esAmarilla) {
+        return this.espejo ? doble.espejo : doble.normal;
+      }
+
+      if (esRoja) {
+        if (this.recta) {
+          return roja.recta;
+        }
+        return this.espejo ? roja.espejo : roja.normal;
+      }
+
+      if (esAmarilla) {
+        if (this.recta) {
+          return amarilla.recta;
+        }
+        return this.espejo ? amarilla.espejo : amarilla.normal;
+      }
     },
   },
 };
 </script>
-
-<style>
-.tarjeta-container {
-  display: inline-block;
-  position: relative;
-  width: 18px;
-  height: 18px;
-  margin-right: 7px;
-}
-
-.tarjeta {
-  position: absolute;
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  margin-left: 5px;
-  background-size: contain;
-}
-
-.amarilla {
-  background-image: url(../assets/tarjeta-amarilla.svg);
-  z-index: 1;
-}
-
-.roja {
-  background-image: url(../assets/tarjeta-roja.svg);
-  z-index: 10;
-}
-
-.espejo {
-  right: 1px;
-}
-
-.tarjeta-amarilla-espejo {
-  background-image: url(../assets/tarjeta-amarilla-espejo.svg);
-  z-index: 1;
-}
-
-.tarjeta-roja-espejo {
-  background-image: url(../assets/tarjeta-roja-espejo.svg);
-  z-index: 10;
-}
-
-.tarjeta-segunda {
-  top: -1.5px;
-  right: -9px;
-}
-
-.tarjeta-segunda.espejo {
-  right: -2px;
-}
-</style>
